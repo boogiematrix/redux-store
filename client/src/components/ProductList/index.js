@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import spinner from '../../assets/spinner.gif';
+import { useDispatch, useSelector } from 'react-redux';
 //TODO add useselector
 function ProductList() {
   const [state, dispatch] = useStoreContext();

@@ -1,6 +1,6 @@
 //TODO import usereducer from react toolkit, check if it works the same
 
-import { useReducer } from 'react';
+//import { useReducer } from 'react';
 import {
   UPDATE_PRODUCTS,
   ADD_TO_CART,
