@@ -1,6 +1,7 @@
 //TODO import usereducer from react toolkit, check if it works the same
 
 //import { useReducer } from 'react';
+import { createReducer } from '@reduxjs/toolkit';
 import {
   UPDATE_PRODUCTS,
   ADD_TO_CART,
@@ -21,41 +22,28 @@ const initialState = {
   currentCategory: '',
 }
 
-export const reducer = (state = initialState, action) => {
-  switch (action.type) {
-
-    case UPDATE_PRODUCTS:
-      return {
-        ...state,
-        products: [...action.products],
-      };
-
-    case ADD_TO_CART:
-      return {
-        ...state,
-        cartOpen: true,
-        cart: [...state.cart, action.product],
-      };
-
-    case ADD_MULTIPLE_TO_CART:
-      return {
-        ...state,
-        cart: [...state.cart, ...action.products],
-      };
-
-    case UPDATE_CART_QUANTITY:
-      return {
-        ...state,
-        cartOpen: true,
-        cart: state.cart.map((product) => {
-          if (action._id === product._id) {
-            product.purchaseQuantity = action.purchaseQuantity;
-          }
-          return product;
-        }),
-      };
-
-    case REMOVE_FROM_CART:
+export const reducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(UPDATE_PRODUCTS, (state, action) => {
+      state.products = action.products
+    })
+    .addCase(ADD_TO_CART, (state, action) => {
+      state.cartOpen = true;
+      state.cart.push(action.product)
+    })
+    .addCase(ADD_MULTIPLE_TO_CART, (state, action) => {
+      state.cart = [...state.cart, ...action.products]
+    })
+    .addCase(UPDATE_CART_QUANTITY, (state, action) => {
+      state.cartOpen = true;
+      state.cart = state.cart.map((product) => {
+        if (action._id === product._id) {
+          product.purchaseQuantity = action.purchaseQuantity;
+        }
+        return product
+      })
+    })
+    .addCase(REMOVE_FROM_CART, (state, action) => {
       let newState = state.cart.filter((product) => {
         return product._id !== action._id;
       });
@@ -65,36 +53,112 @@ export const reducer = (state = initialState, action) => {
         cartOpen: newState.length > 0,
         cart: newState,
       };
-
-    case CLEAR_CART:
+    })
+    .addCase(CLEAR_CART, (state, action) => {
       return {
         ...state,
         cartOpen: false,
         cart: [],
       };
-
-    case TOGGLE_CART:
+    })
+    .addCase(TOGGLE_CART, (state, action) => {
       return {
         ...state,
         cartOpen: !state.cartOpen,
       };
-
-    case UPDATE_CATEGORIES:
+    })
+    .addCase(UPDATE_CATEGORIES, (state, action) => {
       return {
         ...state,
         categories: [...action.categories],
       };
-
-    case UPDATE_CURRENT_CATEGORY:
+    })
+    .addCase(UPDATE_CURRENT_CATEGORY, (state, action) => {
       return {
         ...state,
         currentCategory: action.currentCategory,
       };
+    })
+    .addDefaultCase((state, action) => {
+      return state
+    })
+})
 
-    default:
-      return state;
-  }
-};
+
+// export const reducer = (state = initialState, action) => {
+//   switch (action.type) {
+
+//     case UPDATE_PRODUCTS:
+//       return {
+//         ...state,
+//         products: [...action.products],
+//       };
+
+//     case ADD_TO_CART:
+//       return {
+//         ...state,
+//         cartOpen: true,
+//         cart: [...state.cart, action.product],
+//       };
+
+//     case ADD_MULTIPLE_TO_CART:
+//       return {
+//         ...state,
+//         cart: [...state.cart, ...action.products],
+//       };
+
+//     case UPDATE_CART_QUANTITY:
+//       return {
+//         ...state,
+//         cartOpen: true,
+//         cart: state.cart.map((product) => {
+//           if (action._id === product._id) {
+//             product.purchaseQuantity = action.purchaseQuantity;
+//           }
+//           return product;
+//         }),
+//       };
+
+//     case REMOVE_FROM_CART:
+//       let newState = state.cart.filter((product) => {
+//         return product._id !== action._id;
+//       });
+
+//       return {
+//         ...state,
+//         cartOpen: newState.length > 0,
+//         cart: newState,
+//       };
+
+//     case CLEAR_CART:
+//       return {
+//         ...state,
+//         cartOpen: false,
+//         cart: [],
+//       };
+
+//     case TOGGLE_CART:
+//       return {
+//         ...state,
+//         cartOpen: !state.cartOpen,
+//       };
+
+//     case UPDATE_CATEGORIES:
+//       return {
+//         ...state,
+//         categories: [...action.categories],
+//       };
+
+//     case UPDATE_CURRENT_CATEGORY:
+//       return {
+//         ...state,
+//         currentCategory: action.currentCategory,
+//       };
+
+//     default:
+//       return state;
+//   }
+// };
 
 // export function useProductReducer(initialState) {
 //   return useReducer(reducer, initialState);
