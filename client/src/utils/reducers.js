@@ -47,37 +47,29 @@ export const reducer = createReducer(initialState, (builder) => {
       let newState = state.cart.filter((product) => {
         return product._id !== action._id;
       });
-
-      return {
-        ...state,
-        cartOpen: newState.length > 0,
-        cart: newState,
-      };
+      state.cartOpen = newState.length > 0 ? true : false;
+      state.cart = newState;
+      
     })
     .addCase(CLEAR_CART, (state, action) => {
-      return {
-        ...state,
-        cartOpen: false,
-        cart: [],
-      };
+      state.cartOpen = false;
+      state.cart = [];
+      
     })
     .addCase(TOGGLE_CART, (state, action) => {
-      return {
-        ...state,
-        cartOpen: !state.cartOpen,
-      };
+
+        state.cartOpen = !state.cartOpen
+      
     })
     .addCase(UPDATE_CATEGORIES, (state, action) => {
-      return {
-        ...state,
-        categories: [...action.categories],
-      };
+
+        state.categories = [...action.categories]
+      
     })
     .addCase(UPDATE_CURRENT_CATEGORY, (state, action) => {
-      return {
-        ...state,
-        currentCategory: action.currentCategory,
-      };
+    
+      state.currentCategory = action.currentCategory;
+      
     })
     .addDefaultCase((state, action) => {
       return state
