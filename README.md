@@ -6,7 +6,7 @@ This is an e-commerce platform that uses Redux to manage state.
 
   ![Sample](https://github.com/boogiematrix/redux-store/blob/main/client/public/images/redux-store-screenshot.png)
 
-  [Deployed application]()
+  [Deployed application](https://afternoon-basin-36638.herokuapp.com/)
   
   ## Questions
   Feel free to contact me with any questions
