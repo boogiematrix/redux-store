@@ -1,6 +1,6 @@
 # redux-store
 ## Description
-This is an e-commerce platform that uses Redux to manage state.
+This is an e-commerce platform that was intended as an exercise in state management. It uses React on the front end, with Redux to manage state. The database and server operate on mongoose, graphQL, and Apollo. 
   
   <br/>
 
